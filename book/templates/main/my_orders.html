@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Orders</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #eef2f7;
+            margin: 0;
+            padding: 30px;
+        }
+
+        h2 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .order-card {
+            background: linear-gradient(to right, #ffffff, #f0f4f8);
+            border-left: 6px solid #3498db;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            padding: 25px;
+            margin: 20px auto;
+            max-width: 600px;
+            transition: transform 0.3s ease;
+        }
+
+        .order-card:hover {
+            transform: scale(1.02);
+        }
+
+        .order-id {
+            font-weight: bold;
+            margin-bottom: 12px;
+            color: #2980b9;
+            font-size: 1.1em;
+        }
+
+        .item-list {
+            list-style: none;
+            padding-left: 0;
+            margin-bottom: 15px;
+        }
+
+        .item-list li {
+            padding: 10px 0;
+            border-bottom: 1px dashed #ccc;
+            color: #34495e;
+            transition: background-color 0.2s;
+        }
+
+        .item-list li:hover {
+            background-color: #ecf0f1;
+        }
+
+        .total {
+            font-weight: bold;
+            font-size: 18px;
+            color: #27ae60;
+        }
+
+        .empty-message {
+            text-align: center;
+            color: #888;
+            font-style: italic;
+            font-size: 1.2em;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <h2>My Orders</h2>
+
+    {% if orders %}
+        {% for order in orders %}
+            <div class="order-card">
+                <div class="order-id">Order ID: {{ order.id }}</div>
+                <p><strong>Items:</strong></p>
+                <ul class="item-list">
+                    {% for item in order.orderitem_set.all %}
+                        <li>{{ item.book.title }} ({{ item.quantity }}) - ₹{{ item.total_price }}</li>
+                    {% endfor %}
+                </ul>
+                <div class="total">Total: ₹{{ order.total_price }}</div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p class="empty-message">You have not placed any orders yet.</p>
+    {% endif %}
+</body>
+</html>

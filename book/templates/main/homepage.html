@@ -1,0 +1,105 @@
+{% extends "main/newnavbar.html" %}
+{% block content %}
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+<style>
+    body {
+        {% comment %} background-image:url("{% static 'images/home1.jpg' %}"); {% endcomment %}
+        background-size:cover;
+        background-position:center;
+        height:120vh;
+        margin:0;
+    }
+    .about-section{
+        background-color: rgba(0,0,0,0.6);
+        padding: 20px;
+        margin:20px;
+        border-radius: 8px;
+        color: white;
+        text-shadow: 1px 1px 2px black;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+    .categories-section{
+        background-color: rgba(0,0,0,0.6);
+        padding: 20px;
+        margin:20px;
+        border-radius: 8px;
+        color: white;
+        text-shadow: 1px 1px 2px black;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+    .categories-section ul{
+        list-style: none;
+        padding:0;
+    }
+    .categories-section li{
+        margin: 10px 0;
+    }
+    .categories-section a{
+        color:#00ccff;
+        text-decoration: none;
+        font-size: 18px;
+        transition: color 0.3s;
+    }
+    .categories-section a:hover{
+        color:#ffcc00;
+        text-decoration: none;
+    }
+    .hero{
+        background-color: rgba(0,0,0,0.6);
+        color:#fff;
+        padding: 20px;
+        margin: 20px;
+        border-radius: 10px;
+        text-align: center;
+        text-shadow: 1px 1px 2px black;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    }
+    .footer{
+        background: black;
+        color:#fff;
+        text-align: center;
+        padding: 10px 0;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+    }
+
+
+</style>
+<body class = "bg-dark">
+<!-- Hero section -->
+
+<section class="hero">
+    <h1>Welcome to BookHub</h1>
+    <p>Your one-stop shop for Programming, Networking, and AI books!</p>
+</section>
+
+<!-- Categories section -->
+
+<section class="categories-section">
+<h1>Book Categories</h1>
+    <ul>
+        {% for category in categories %}
+        <li>
+            <a href="{% url 'books_by_category' category.name %}">{{ category.name }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+</section>
+
+<!-- About section -->
+
+<section class="about-section">
+    <h1>About us</h1>
+    <p>{{ about_text }}</p>
+</section>
+
+<!-- Footer section -->
+
+<footer class="footer">
+    <p>&copy; 2025 BookHub. All rights reserved.</p>
+</footer>
+
+{% endblock %}

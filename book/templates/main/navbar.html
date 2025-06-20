@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    *{
+        margin:0;
+        padding:0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+    }
+    body{
+        background-color: #f4f4f9;
+    }
+    .navbar{
+        display:flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: black;
+        padding:15px 20px;
+    }
+    .logo{
+        color:#fff;
+        font-size: 24px;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+    .menu-toggle{
+        display: none;
+        font-size: 28px;
+        color:#fff;
+        cursor: pointer;
+    }
+    .nav-links{
+        list-style: none;
+        display:flex;
+    }
+    .nav-links li{
+        margin-left: 20px;
+    }
+    .nav-links a{
+        text-decoration: none;
+        color:#fff;
+        font-size: 18px;
+        transition:color 0.3s;
+    }
+    .nav-links a:hover{
+        color:#ff4b2b;
+    }
+
+    @media(max-width:768px){
+        .nav-links{
+            flex-direction: column;
+            display:none;
+            width:100%;
+            background-color: #333;
+            text-align: center;
+            position:absolute;
+            right:0px;
+            top:60px;
+            z-index: 0;
+        }
+        .menu-toggle{
+            display: block;
+            position:absolute;
+            right:25px;
+            top:5px;
+        }
+        .navbar{
+            position: relative;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+        .nav-links.active{
+            display:flex;
+        }
+        .nav-links li{
+            margin: 10px 0;
+        }
+    }
+
+</style>
+<body>
+    <nav class="navbar">
+        <div class="logo">BookHub</div>
+        <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+        <ul class="nav-links">
+            <li><a href="/book/home/">HOME</a></li>
+            <li><a href="/book/cart/">CART</a></li>
+            <li><a href="/logout/">LOGOUT</a></li>
+        </ul>
+    </nav>
+    <script>
+        function toggleMenu(){
+            const navlinks = document.querySelector('.nav-links');
+            navlinks.classList.toggle('active')
+        }
+    </script>
+    {% block content %}
+
+    
+
+    {% endblock %}
+</body>
+</html>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f4f8;
+    padding: 30px;
+    margin: 0;
+  }
+
+  h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 30px;
+  }
+
+  .cart-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .cart-item {
+    background: linear-gradient(135deg, #ffffff, #e6f0ff);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 20px;
+    border-radius: 15px;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+    border-left: 6px solid #007bff;
+    transition: transform 0.2s ease;
+  }
+
+  .cart-item:hover {
+    transform: scale(1.01);
+  }
+
+  .cart-details {
+    flex-grow: 1;
+  }
+
+  .cart-details h4 {
+    margin: 0 0 6px;
+    color: #007bff;
+    font-size: 1.2em;
+  }
+
+  .cart-details p {
+    margin: 2px 0;
+    color: #333;
+  }
+
+  .cart-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .action-btn {
+    padding: 8px 12px;
+    font-size: 18px;
+    background: #28a745;
+    border: none;
+    color: white;
+    border-radius: 6px;
+    text-decoration: none;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  }
+
+  .action-btn:hover {
+    background: #218838;
+  }
+
+  .action-btn:nth-child(2) {
+    background: #dc3545;
+  }
+
+  .action-btn:nth-child(2):hover {
+    background: #c82333;
+  }
+
+  .total-section {
+    margin-top: 40px;
+    font-size: 1.5em;
+    font-weight: bold;
+    text-align: center;
+    color: #333;
+  }
+
+  .empty-cart {
+    font-size: 1.2em;
+    color: #777;
+    text-align: center;
+    margin-top: 40px;
+  }
+
+  .empty-cart a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+  }
+
+  .empty-cart a:hover {
+    text-decoration: underline;
+  }
+
+   .btn-order {
+    background-color: #27ae60;
+    color: white;
+    padding: 20px 30px;
+    font-weight: bold;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+
+  .btn-order:hover {
+    background-color: #219150;
+  }
+  
+  .order-button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+</style>
+
+<body>
+    
+<h2>Your Cart</h2>
+
+{% if cart_items %}
+  <div class="cart-container">
+    {% for item in cart_items %}
+      <div class="cart-item">
+        <div class="cart-details">
+          <h4>{{ item.book.title }}</h4>
+          <p>Price: ₹{{ item.book.price }}</p>
+          <p>Quantity: {{ item.quantity }}</p>
+          <p>Total: ₹{{ item.total_price }}</p>
+        </div>
+        <div class="cart-actions">
+          <a class="action-btn" href="{% url 'increase_quantity' item.id %}">➕</a>
+          <a class="action-btn" href="{% url 'decrease_quantity' item.id %}">➖</a>
+        </div>
+      </div>
+    {% endfor %}
+  </div>
+
+  <div class="total-section">
+    Total: ₹{{ total }}
+  </div>
+
+<div class="order-button-container">
+  <form method="post" action="{% url 'place_order' %}">
+    {% csrf_token %}
+    <button type="submit" class="btn-order">Place Order</button>
+  </form>
+</div>
+
+{% else %}
+  <p class="empty-cart">Your cart is empty. <a href="{% url 'homepage' %}">Go back to shop</a>.</p>
+{% endif %}
+</body>
+</html>

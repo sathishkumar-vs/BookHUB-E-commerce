@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+{% load bootstrap5 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <h2 class="mb-4">SIGNUP PAGE</h2>
+
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Username:</label>
+                        <input type="text" class="form-control bg-secondary text-light" name="username" id="exampleInputEmail1" aria-describedby="emailHelp" required>
+                    </div>
+                    <p class="text-danger fw-bold">{{error}}</p>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Password:</label>
+                        <input type="password" class="form-control bg-secondary text-light" name="password" id="exampleInputEmail1" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">First name:</label>
+                        <input type="text" class="form-control bg-secondary text-light" name="firstname" id="exampleInputEmail1" aria-describedby="emailHelp" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Last name:</label>
+                        <input type="text" class="form-control bg-secondary text-light" name="lastname" id="exampleInputEmail1" aria-describedby="emailHelp" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Email:</label>
+                        <input type="email" class="form-control bg-secondary text-light" name="email_address" id="exampleInputEmail1" aria-describedby="emailHelp" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="exampleInputEmail1" class="form-label">Age:</label>
+                        <input type="number" class="form-control bg-secondary text-light" name="age" id="exampleInputEmail1" aria-describedby="emailHelp" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>                    
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
