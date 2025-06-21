@@ -74,16 +74,38 @@
     .book-card .buy-btn:hover{
         background-color:white;
     }
+
+    #searchInput {
+        display: block;               
+        margin: 0 auto 20px auto;     
+        width: 100%;
+        max-width: 400px;             
+        padding: 10px 15px;
+        border: 2px solid #ccc;
+        border-radius: 8px;
+        font-size: 16px;
+        outline: none;
+        transition: 0.3s border-color;
+    }
+
+    #searchInput:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
+
         
 </style>
 <body class="bg-dark">
 <h1 class="category-title">{{ category.name }}</h1>
+
+<input type="text" id="searchInput" placeholder="Search by title..." class="form-control my-3">
+
 <div class="book-container">
     {% for book in books %}
     <div class="book-card">
         {% comment %} <img src="{{ book.image.url }}" alt="{{ book.title }}"> {% endcomment %}
         <div class="book-details">
-            <h3>{{ book.title }}</h3>
+            <h3 class="book-title">{{ book.title }}</h3>
             <p>Author: {{ book.author }}</p>
             <p>{{ book.description|truncatewords:20 }}</p>
             <p>Price: ${{ book.price }}</p>
@@ -96,5 +118,26 @@
     </div>
     {% endfor %}
 </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const searchInput = document.getElementById("searchInput");
+    const books = document.querySelectorAll(".book-card");
+
+    searchInput.addEventListener("input", function() {
+        const searchText = searchInput.value.toLowerCase();
+
+        books.forEach(function(book) {
+            const title = book.querySelector(".book-title").textContent.toLowerCase();
+            if (title.includes(searchText)) {
+                book.style.display = "block";  // show
+            } else {
+                book.style.display = "none";   // hide
+            }
+        });
+    });
+});
+</script>
+
    
 {% endblock %}
