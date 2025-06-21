@@ -1,6 +1,11 @@
 from django.shortcuts import render,get_object_or_404,redirect
 from .models import *
 from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+from .models import Order, CartItem
+from decimal import Decimal
+import json
+from django.core.paginator import Paginator
 
 
 @login_required(login_url='/')
@@ -96,5 +101,44 @@ def place_order(request):
 def my_orders(request):
 
     orders = Order.objects.filter(user=request.user).order_by('-created_at')
+    paginator = Paginator(orders, 5)  # 👈 5 orders per page
 
-    return render(request, 'main/my_orders.html', {'orders': orders})
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    return render(request, 'main/my_orders.html', {'page_obj': page_obj})
+
+@login_required
+def fake_payment(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+        except:
+            return JsonResponse({'success': False, 'error': 'Invalid data'})
+
+        cart_items = CartItem.objects.filter(user=request.user)
+        if not cart_items.exists():
+            return JsonResponse({'success': False, 'error': 'Cart is empty'})
+
+        # Step 1: Create Order
+        order = Order.objects.create(user=request.user, is_paid=True)
+
+        # Step 2: Create OrderItems
+        for item in cart_items:
+            OrderItem.objects.create(
+                order=order,
+                book=item.book,
+                quantity=item.quantity,
+                price=item.book.price  # assuming price is stored in Book
+            )
+
+        # Step 3: Clear Cart
+        cart_items.delete()
+
+        return JsonResponse({'success': True})
+    
+    return JsonResponse({'success': False})
+
+def order_success(request):
+
+    return render(request, 'main/order_success.html')

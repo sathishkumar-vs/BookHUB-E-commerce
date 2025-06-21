@@ -79,7 +79,7 @@
 <!-- Categories section -->
 
 <section class="categories-section">
-<h1>Book Categories</h1>
+<h3>Book Categories</h3>
     <ul>
         {% for category in categories %}
         <li>
@@ -92,14 +92,14 @@
 <!-- About section -->
 
 <section class="about-section">
-    <h1>About us</h1>
+    <h3>About us</h3>
     <p>{{ about_text }}</p>
 </section>
 
 <!-- Footer section -->
 
-<footer class="footer">
+{% comment %} <footer class="footer">
     <p>&copy; 2025 BookHub. All rights reserved.</p>
-</footer>
+</footer> {% endcomment %}
 
 {% endblock %}

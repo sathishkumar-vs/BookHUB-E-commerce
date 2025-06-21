@@ -5,50 +5,87 @@
   <title>BookHub</title>
   <style>
     body {
-      font-family: 'Segoe UI', sans-serif;
       margin: 0;
-      padding: 0;
-      background-color: #f9f9f9;
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
     }
-    nav {
-      background-color:rgb(2, 9, 15);
-      padding: 1rem;
+
+    .navbar {
+      background-color: black;
+      padding: 1rem 2rem;
       color: white;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      position: relative;
     }
-    nav a {
+
+    .logo a {
       color: white;
       text-decoration: none;
-      margin-left: 1rem;
       font-weight: bold;
+      font-size: 20px;
     }
-    nav a:hover {
+
+    .menu-toggle {
+      font-size: 28px;
+      cursor: pointer;
+      color: white;
+      z-index: 2;
+    }
+
+    .nav-links {
+      display: flex;
+      flex-direction: row;
+      gap: 1rem;
+      position: absolute;
+      right: 4rem;
+      opacity: 0;
+      transform: scale(0.8);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      pointer-events: none;
+    }
+
+    .nav-links.show {
+      opacity: 1;
+      transform: scale(1);
+      pointer-events: auto;
+    }
+
+    .nav-links a {
+      color: white;
       text-decoration: none;
+      background-color: black;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      transition: background-color 0.2s;
     }
-    .container {
-      padding: 2rem;
+
+    .nav-links a:hover {
+      background-color: black;
     }
   </style>
 </head>
 <body>
-  <nav>
-    <div><a href="{% url 'homepage' %}">📚 BookHub</a></div>
-    <div>
+  <nav class="navbar">
+    <div class="logo"><a href="{% url 'homepage' %}">📚 BookHub</a></div>
+    <div class="nav-links" id="navLinks">
       <a href="{% url 'cart' %}">🛒 Cart ({{ cart_count }})</a>
-      {% if user.is_authenticated %}
-        <a href="{% url 'logout' %}">Logout</a>
-      {% else %}
-        <a href="{% url 'login' %}">Login</a>
-        <a href="{% url 'signup' %}">Signup</a>
-      {% endif %}
+      <a href="{% url 'my_orders' %}">📦 Orders</a>
+      <a href="{% url 'logout' %}">🚪 Logout</a>
     </div>
+    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
   </nav>
 
   <div class="container">
     {% block content %}
     {% endblock %}
   </div>
+
+  <script>
+    function toggleMenu() {
+      document.getElementById("navLinks").classList.toggle("show");
+    }
+  </script>
 </body>
 </html>

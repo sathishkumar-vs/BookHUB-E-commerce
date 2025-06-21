@@ -11,4 +11,6 @@ urlpatterns = [
     path('cart/', view_cart, name='cart'),
     path('place-order/', place_order, name='place_order'),
     path('my-orders/', my_orders, name='my_orders'),
+    path('fake-payment/', fake_payment, name='fake_payment'),
+    path('order-success/', order_success, name='order_success'),
 ]
